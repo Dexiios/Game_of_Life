@@ -23,7 +23,8 @@ struct Cell
     SDL_Rect *shape;
 };
 
-int InitGame(SDL_Renderer *renderer, struct Cell **grid);
-int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell **grid);
+int InitGame(SDL_Renderer *renderer, struct Cell grid[100][100]);
+int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[100][100]);
+int Playing(SDL_Renderer *renderer, struct Cell grid[100][100]);
 
 #endif

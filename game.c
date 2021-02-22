@@ -33,29 +33,38 @@ int main()
 
     //-------------------------------------------------------------------------------------------------------------
 
-    /*SDL_Rect carre;
-
-    int cellWidth = SCREEN_WIDTH / 100;
-    int cellHeight = SCREEN_HEIGHT / 100;
-
-    carre.h = cellHeight;
-    carre.w = cellWidth;
-
-    carre.x = 320;
-    carre.y = 240;
-
-    SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, SDL_ALPHA_OPAQUE);
-
-    SDL_RenderFillRect(renderer, &carre);
-
-    SDL_RenderPresent(renderer);*/
     
-    struct Cell **grid = malloc(sizeof(struct Cell)*CELLHEIGHT*CELLWIDTH);
+    struct Cell grid[100][100];
+    for (size_t i = 0; i < 100; i++)
+    {
+        for (size_t j = 0; j < 100; j++)
+        {
+            grid[i][j].shape = malloc(sizeof(SDL_Rect));
+        }
+    }
+    
     
     InitGame(renderer, grid);
     
+    int closeRequested = 0;
 
-    SDL_Delay(5000);
+    while(closeRequested == 0)
+    {
+        SDL_Event event;
+        if(SDL_PollEvent(&event))
+        {
+            if(event.type == SDL_QUIT)
+            {
+                closeRequested = 1;
+            }
+        }
+
+        Playing(renderer, grid);
+        SDL_RenderPresent(renderer);
+        SDL_Delay(500);
+    }
+    
+    
     SDL_Quit();
     
     return 0;

@@ -1,49 +1,47 @@
 #include "game.h"
 
-int InitGame(SDL_Renderer *renderer, struct Cell **grid)
+int InitGame(SDL_Renderer *renderer, struct Cell grid[100][100])
 {
-    // puts start alive cells
+    // puts start alive cells in grid
     
-    for (size_t i = 0; i < SCREEN_WIDTH; i+=CELLWIDTH)
+    for (size_t i = 10; i < GRID_WIDTH-10; i++)
     {
-        printf("coucou1\n");
-        DrawCell(renderer, i, 400, grid);
-        printf("coucou2\n");
-        grid[i][400].state = 1;
+        grid[i][50].state = ALIVE;
+        DrawCell(renderer, i, 50, grid);
     }
-    
-
-    // puts all the dead cells
-    for (size_t j = 0; j < SCREEN_WIDTH; j+=CELLWIDTH)
-    {
-        for (size_t k = 0; k < SCREEN_HEIGHT; k+=CELLHEIGHT)
-        {
-            if (k != 400)
-            {
-                grid[j][k].state = 0;
-            }
-        }
-    }
-
-    
-    
-
-
     
     SDL_RenderPresent(renderer);
     return 0;
 }
 
-int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell **grid)
+//needs optimization !!!!!
+int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[100][100])
 {
     
     struct Cell cell = grid[i][j];
-    cell.shape->h = CELLHEIGHT;
-    cell.shape->w = CELLWIDTH;
-    cell.shape->x = i;
-    cell.shape->y = j;
-    SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, SDL_ALPHA_OPAQUE);
-    SDL_RenderFillRect(renderer, cell.shape);
+
+    if (cell.state == ALIVE)
+    {
+        cell.shape->h = CELLHEIGHT;
+        cell.shape->w = CELLWIDTH;
+        cell.shape->x = i * CELLWIDTH;  //translates grid index to window "index"
+        cell.shape->y = j * CELLHEIGHT; //translates grid index to window "index"
+
+        SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, SDL_ALPHA_OPAQUE);
+        SDL_RenderFillRect(renderer, cell.shape);
+    }
+
+    if (cell.state == DEAD)
+    {
+        cell.shape->h = CELLHEIGHT;
+        cell.shape->w = CELLWIDTH;
+        cell.shape->x = i * CELLWIDTH;  //translates grid index to window "index"
+        cell.shape->y = j * CELLHEIGHT; //translates grid index to window "index"
+
+        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
+        SDL_RenderFillRect(renderer, cell.shape);
+    }
     
+
     return 0;
 }
