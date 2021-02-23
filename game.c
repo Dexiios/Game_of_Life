@@ -33,7 +33,6 @@ int main()
 
     //-------------------------------------------------------------------------------------------------------------
 
-    
     struct Cell grid[100][100];
     for (size_t i = 0; i < 100; i++)
     {
@@ -42,16 +41,17 @@ int main()
             grid[i][j].shape = malloc(sizeof(SDL_Rect));
         }
     }
+
+    
     
     
     InitGame(renderer, grid);
-    
     int closeRequested = 0;
 
     while(closeRequested == 0)
     {
         SDL_Event event;
-        if(SDL_PollEvent(&event))
+        while(SDL_PollEvent(&event))
         {
             if(event.type == SDL_QUIT)
             {
@@ -59,13 +59,20 @@ int main()
             }
         }
 
-        Playing(renderer, grid);
+        struct Cell grid2[100][100];
+        for (size_t i = 0; i < 100; i++)
+        {
+            for (size_t j = 0; j < 100; j++)
+            {
+                grid2[i][j].shape = malloc(sizeof(SDL_Rect));
+            }
+        }
+        SDL_Delay(1000);
+
+        SDL_RenderClear(renderer);
+        Playing(renderer, grid, grid2);
         SDL_RenderPresent(renderer);
-        SDL_Delay(500);
     }
-    
-    
     SDL_Quit();
-    
     return 0;
 }

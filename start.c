@@ -4,12 +4,12 @@ int InitGame(SDL_Renderer *renderer, struct Cell grid[100][100])
 {
     // puts start alive cells in grid
     
-    for (size_t i = 10; i < GRID_WIDTH-10; i++)
+    for (size_t j = 10; j < GRID_WIDTH-10; j++)
     {
-        grid[i][50].state = ALIVE;
-        DrawCell(renderer, i, 50, grid);
+        grid[50][j].state = ALIVE;
+        DrawCell(renderer, 50, j, grid);
     }
-    
+
     SDL_RenderPresent(renderer);
     return 0;
 }
@@ -24,8 +24,8 @@ int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[100][1
     {
         cell.shape->h = CELLHEIGHT;
         cell.shape->w = CELLWIDTH;
-        cell.shape->x = i * CELLWIDTH;  //translates grid index to window "index"
-        cell.shape->y = j * CELLHEIGHT; //translates grid index to window "index"
+        cell.shape->x = j * CELLWIDTH;  //translates grid index to window "index"
+        cell.shape->y = i * CELLHEIGHT; //translates grid index to window "index"
 
         SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, SDL_ALPHA_OPAQUE);
         SDL_RenderFillRect(renderer, cell.shape);
@@ -35,8 +35,8 @@ int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[100][1
     {
         cell.shape->h = CELLHEIGHT;
         cell.shape->w = CELLWIDTH;
-        cell.shape->x = i * CELLWIDTH;  //translates grid index to window "index"
-        cell.shape->y = j * CELLHEIGHT; //translates grid index to window "index"
+        cell.shape->x = j * CELLWIDTH;  //translates grid index to window "index"
+        cell.shape->y = i * CELLHEIGHT; //translates grid index to window "index"
 
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
         SDL_RenderFillRect(renderer, cell.shape);

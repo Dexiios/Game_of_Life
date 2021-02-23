@@ -17,6 +17,9 @@
 #define CELLWIDTH  SCREEN_WIDTH/100
 #define CELLHEIGHT  SCREEN_HEIGHT/100
 
+
+    
+
 struct Cell
 {
     int state;
@@ -25,6 +28,6 @@ struct Cell
 
 int InitGame(SDL_Renderer *renderer, struct Cell grid[100][100]);
 int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[100][100]);
-int Playing(SDL_Renderer *renderer, struct Cell grid[100][100]);
+int Playing(SDL_Renderer *renderer, struct Cell grid[100][100], struct Cell grid2[100][100]);
 
 #endif
