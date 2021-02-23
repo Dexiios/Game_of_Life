@@ -43,8 +43,7 @@ int main()
     }
 
     
-    
-    
+
     InitGame(renderer, grid);
     int closeRequested = 0;
 
@@ -65,13 +64,23 @@ int main()
             for (size_t j = 0; j < 100; j++)
             {
                 grid2[i][j].shape = malloc(sizeof(SDL_Rect));
+                grid2[i][j].state = DEAD;
             }
         }
-        SDL_Delay(1000);
 
-        SDL_RenderClear(renderer);
+        SDL_Delay(100);
         Playing(renderer, grid, grid2);
         SDL_RenderPresent(renderer);
+        
+
+        for (size_t i = 0; i < 100; i++)
+        {
+            for (size_t j = 0; j < 100; j++)
+            {
+                grid[i][j].state = grid2[i][j].state;
+            }
+        }
+
     }
     SDL_Quit();
     return 0;
