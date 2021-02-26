@@ -1,6 +1,6 @@
 #include "game.h"
 
-int InitGame(SDL_Renderer *renderer, struct Cell grid[100][100])
+int InitGame(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH])
 {
     // puts start alive cells in grid
 
@@ -29,7 +29,7 @@ int InitGame(SDL_Renderer *renderer, struct Cell grid[100][100])
 }
 
 //needs optimization !!!!!
-int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[100][100])
+int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH])
 {
     
     struct Cell cell = grid[i][j];

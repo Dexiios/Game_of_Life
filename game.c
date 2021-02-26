@@ -33,10 +33,10 @@ int main()
 
     //-------------------------------------------------------------------------------------------------------------
 
-    struct Cell grid[100][100];
-    for (size_t i = 0; i < 100; i++)
+    struct Cell grid[GRID_HEIGHT][GRID_WIDTH];
+    for (size_t i = 0; i < GRID_HEIGHT; i++)
     {
-        for (size_t j = 0; j < 100; j++)
+        for (size_t j = 0; j < GRID_WIDTH; j++)
         {
             grid[i][j].shape = malloc(sizeof(SDL_Rect));
         }
@@ -58,10 +58,10 @@ int main()
             }
         }
 
-        struct Cell grid2[100][100];
-        for (size_t i = 0; i < 100; i++)
+        struct Cell grid2[GRID_HEIGHT][GRID_WIDTH];
+        for (size_t i = 0; i < GRID_HEIGHT; i++)
         {
-            for (size_t j = 0; j < 100; j++)
+            for (size_t j = 0; j < GRID_WIDTH; j++)
             {
                 grid2[i][j].shape = malloc(sizeof(SDL_Rect));
                 grid2[i][j].state = DEAD;
@@ -73,9 +73,9 @@ int main()
         SDL_RenderPresent(renderer);
         
 
-        for (size_t i = 0; i < 100; i++)
+        for (size_t i = 0; i < GRID_HEIGHT; i++)
         {
-            for (size_t j = 0; j < 100; j++)
+            for (size_t j = 0; j < GRID_WIDTH; j++)
             {
                 grid[i][j].state = grid2[i][j].state;
             }

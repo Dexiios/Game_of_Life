@@ -11,10 +11,10 @@
 #define GRID_HEIGHT 100
 #define GRID_WIDTH  100
 
-#define SCREEN_WIDTH 1000
-#define SCREEN_HEIGHT 1000
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 800
 
-#define CELLWIDTH  SCREEN_WIDTH/100
+#define CELLWIDTH  SCREEN_WIDTH/GRID_HEIGHT
 //#define CELLHEIGHT  SCREEN_HEIGHT/100
 
 
@@ -26,8 +26,8 @@ struct Cell
     SDL_Rect *shape;
 };
 
-int InitGame(SDL_Renderer *renderer, struct Cell grid[100][100]);
-int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[100][100]);
-int Playing(SDL_Renderer *renderer, struct Cell grid[100][100], struct Cell grid2[100][100]);
+int InitGame(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH]);
+int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH]);
+int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], struct Cell grid2[GRID_HEIGHT][GRID_WIDTH]);
 
 #endif
