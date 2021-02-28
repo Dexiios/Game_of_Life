@@ -11,14 +11,14 @@
 #define PLAY 0
 #define PAUSE 1
 
-#define GRID_HEIGHT 100
-#define GRID_WIDTH  100
+#define GRID_HEIGHT 200
+#define GRID_WIDTH  200
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 800
 
 #define CELLWIDTH  SCREEN_WIDTH/GRID_HEIGHT
-//#define CELLHEIGHT  SCREEN_HEIGHT/100
+
 
 
 struct Game
