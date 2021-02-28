@@ -8,6 +8,9 @@
 #define DEAD 0
 #define ALIVE 1
 
+#define PLAY 0
+#define PAUSE 1
+
 #define GRID_HEIGHT 100
 #define GRID_WIDTH  100
 
@@ -18,7 +21,10 @@
 //#define CELLHEIGHT  SCREEN_HEIGHT/100
 
 
-    
+struct Game
+{
+    int state;
+};
 
 struct Cell
 {
@@ -26,7 +32,7 @@ struct Cell
     SDL_Rect *shape;
 };
 
-int InitGame(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH]);
+int InitGame(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], Sint32 i, Sint32 j);
 int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH]);
 int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], struct Cell grid2[GRID_HEIGHT][GRID_WIDTH]);
 

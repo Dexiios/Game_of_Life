@@ -1,7 +1,5 @@
 #include "game.h"
 
-
-
 int main()
 {
 
@@ -15,7 +13,7 @@ int main()
     //create the window to draw in
     SDL_Window *window = SDL_CreateWindow("Game of Life", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 
-    if(window == NULL)
+    if (window == NULL)
     {
         printf("SDL_Create_Window Error : %s\n", SDL_GetError());
         return EXIT_FAILURE;
@@ -25,13 +23,18 @@ int main()
     Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, render_flags);
 
-    if(renderer == NULL)
+    if (renderer == NULL)
     {
         printf("SDL_Renderer Error : %s\n", SDL_GetError());
         return EXIT_FAILURE;
     }
 
     //-------------------------------------------------------------------------------------------------------------
+
+    int hold = 0;
+
+    struct Game game;
+    game.state = PAUSE;
 
     struct Cell grid[GRID_HEIGHT][GRID_WIDTH];
     for (size_t i = 0; i < GRID_HEIGHT; i++)
@@ -42,45 +45,85 @@ int main()
         }
     }
 
-    
-
-    InitGame(renderer, grid);
     int closeRequested = 0;
 
-    while(closeRequested == 0)
+    while (closeRequested == 0)
     {
         SDL_Event event;
-        while(SDL_PollEvent(&event))
+
+        while (SDL_PollEvent(&event))
         {
-            if(event.type == SDL_QUIT)
+            switch (event.type)
             {
+            case SDL_QUIT:
                 closeRequested = 1;
+                break;
+
+            case SDL_MOUSEBUTTONUP:
+                hold = 0;
+                break;
+
+            case SDL_MOUSEMOTION:
+                if (hold == 1)
+                {
+                    Sint32 i = event.motion.x;
+                    Sint32 j = event.motion.y;
+                    InitGame(renderer, grid, i, j);
+                }
+
+            case SDL_KEYDOWN:
+                if (event.key.keysym.sym == SDLK_SPACE)
+                {
+                    if (game.state == PAUSE)
+                    {
+                        game.state = PLAY;
+                    }
+                    else
+                    {
+                        game.state = PAUSE;
+                    }
+                }
+                break;
+
+            case SDL_MOUSEBUTTONDOWN:
+                if (event.button.button == SDL_BUTTON_LEFT)
+                {
+                    Sint32 i = event.button.x;
+                    Sint32 j = event.button.y;
+                    InitGame(renderer, grid, i, j);
+                    hold = 1;
+                }
+                break;
+
+            default:
+                break;
             }
         }
 
-        struct Cell grid2[GRID_HEIGHT][GRID_WIDTH];
-        for (size_t i = 0; i < GRID_HEIGHT; i++)
+        if (game.state == PLAY)
         {
-            for (size_t j = 0; j < GRID_WIDTH; j++)
+            struct Cell grid2[GRID_HEIGHT][GRID_WIDTH];
+            for (size_t i = 0; i < GRID_HEIGHT; i++)
             {
-                grid2[i][j].shape = malloc(sizeof(SDL_Rect));
-                grid2[i][j].state = DEAD;
+                for (size_t j = 0; j < GRID_WIDTH; j++)
+                {
+                    grid2[i][j].shape = malloc(sizeof(SDL_Rect));
+                    grid2[i][j].state = DEAD;
+                }
+            }
+
+            SDL_Delay(100);
+            Playing(renderer, grid, grid2);
+            SDL_RenderPresent(renderer);
+
+            for (size_t i = 0; i < GRID_HEIGHT; i++)
+            {
+                for (size_t j = 0; j < GRID_WIDTH; j++)
+                {
+                    grid[i][j].state = grid2[i][j].state;
+                }
             }
         }
-
-        SDL_Delay(100);
-        Playing(renderer, grid, grid2);
-        SDL_RenderPresent(renderer);
-        
-
-        for (size_t i = 0; i < GRID_HEIGHT; i++)
-        {
-            for (size_t j = 0; j < GRID_WIDTH; j++)
-            {
-                grid[i][j].state = grid2[i][j].state;
-            }
-        }
-
     }
     SDL_Quit();
     return 0;
