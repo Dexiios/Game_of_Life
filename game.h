@@ -11,15 +11,13 @@
 #define PLAY 0
 #define PAUSE 1
 
-#define GRID_HEIGHT 200
-#define GRID_WIDTH  200
+#define GRID_HEIGHT 100
+#define GRID_WIDTH  100
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 800
 
 #define CELLWIDTH  SCREEN_WIDTH/GRID_HEIGHT
-
-
 
 struct Game
 {
@@ -35,5 +33,7 @@ struct Cell
 int InitGame(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], Sint32 i, Sint32 j);
 int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH]);
 int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], struct Cell grid2[GRID_HEIGHT][GRID_WIDTH]);
+int IsValid(size_t i, size_t j);
+int CountNeighbours(size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH]);
 
 #endif

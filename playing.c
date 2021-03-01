@@ -8,42 +8,9 @@ int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], s
         {
             if (grid[i][j].state == ALIVE)
             {
-                int neighbors = 0;
+                int neighbours = CountNeighbours(i,j,grid);
 
-                if (grid[i - 1][j - 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i - 1][j].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i - 1][j + 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i][j - 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i][j + 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i + 1][j - 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i + 1][j].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i + 1][j + 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-
-                if (neighbors < 2 || neighbors > 3)
+                if (neighbours < 2 || neighbours > 3)
                 {
                     grid2[i][j].state = DEAD;
                     
@@ -55,41 +22,9 @@ int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], s
             }
             if(grid[i][j].state == DEAD)
             {
-                int neighbors = 0;
-                if (grid[i - 1][j - 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i - 1][j].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i - 1][j + 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i][j - 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i][j + 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i + 1][j - 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i + 1][j].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
-                if (grid[i + 1][j + 1].state == ALIVE)
-                {
-                    neighbors += 1;
-                }
+                int neighbours = CountNeighbours(i,j,grid);
 
-                if (neighbors == 3)
+                if (neighbours == 3)
                 {
                     grid2[i][j].state = ALIVE;
                 }
@@ -109,4 +44,50 @@ int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], s
         }
     }
     return 0;
+}
+
+int IsValid(size_t i, size_t j)
+{
+    int res = 0;
+    if (i >= 0 && j >= 0 && i < GRID_WIDTH && j < GRID_HEIGHT)
+        res = 1;
+    return res;
+}
+
+int CountNeighbours(size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH])
+{
+    int neighbours = 0;
+    if (IsValid(i-1,j-1) == 1 && grid[i-1][j-1].state == ALIVE)
+    {
+        neighbours++;
+    }
+    if (IsValid(i-1,j) == 1 && grid[i-1][j].state == ALIVE)
+    {
+        neighbours++;
+    }
+    if (IsValid(i-1,j+1) == 1 && grid[i-1][j+1].state == ALIVE)
+    {
+        neighbours++;
+    }
+    if (IsValid(i,j-1) == 1 && grid[i][j-1].state == ALIVE)
+    {
+        neighbours++;
+    }
+    if (IsValid(i,j+1) == 1 && grid[i][j+1].state == ALIVE)
+    {
+        neighbours++;
+    }
+    if (IsValid(i+1,j-1) == 1 && grid[i+1][j-1].state == ALIVE)
+    {
+        neighbours++;
+    }
+    if (IsValid(i+1,j) == 1 && grid[i+1][j].state == ALIVE)
+    {
+        neighbours++;
+    }
+    if (IsValid(i+1,j+1) == 1 && grid[i+1][j+1].state == ALIVE)
+    {
+        neighbours++;
+    }
+    return neighbours;
 }
