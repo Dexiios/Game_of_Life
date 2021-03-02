@@ -80,6 +80,7 @@ int main()
                     Sint32 j = event.motion.y;
                     InitGame(renderer, grid, i, j);
                 }
+                break;
 
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_SPACE)
