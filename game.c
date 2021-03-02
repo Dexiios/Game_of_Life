@@ -31,8 +31,15 @@ int main()
 
     //-------------------------------------------------------------------------------------------------------------
 
-    //int neighboursI[] = {-1, 0, 1};
-    //int neighboursJ[] = {-1, 0, 1};
+    int neighboursI[3];
+    int neighboursJ[3];
+
+    neighboursI[0] = -1;
+    neighboursI[1] = 0;
+    neighboursI[2] = 1;
+    neighboursJ[0] = -1;
+    neighboursJ[1] = 0;
+    neighboursJ[2] = 1;
 
     int hold = 0;
 
@@ -116,7 +123,7 @@ int main()
             }
 
             SDL_Delay(100);
-            Playing(renderer, grid, grid2);
+            Playing(renderer, grid, grid2, neighboursI, neighboursJ);
             SDL_RenderPresent(renderer);
 
             for (size_t i = 0; i < GRID_HEIGHT; i++)

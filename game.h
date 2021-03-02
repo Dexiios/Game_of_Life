@@ -32,8 +32,8 @@ struct Cell
 
 int InitGame(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], Sint32 i, Sint32 j);
 int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH]);
-int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], struct Cell grid2[GRID_HEIGHT][GRID_WIDTH]);
-int IsValid(size_t i, size_t j);
-int CountNeighbours(size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH]);
+int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], struct Cell grid2[GRID_HEIGHT][GRID_WIDTH], int neighboursI[3], int neighboursJ[3]);
+int IsValid(int i, int j);
+int CountNeighbours(int h, int w, struct Cell grid[GRID_HEIGHT][GRID_WIDTH] ,int neighboursI[3], int neighboursJ[3]);
 
 #endif

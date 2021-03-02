@@ -1,6 +1,6 @@
 #include "game.h"
 
-int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], struct Cell grid2[GRID_HEIGHT][GRID_WIDTH])
+int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], struct Cell grid2[GRID_HEIGHT][GRID_WIDTH], int neighboursI[3], int neighboursJ[3])
 {
     for (size_t i = 0; i < GRID_HEIGHT; i++)
     {
@@ -8,7 +8,7 @@ int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], s
         {
             if (grid[i][j].state == ALIVE)
             {
-                int neighbours = CountNeighbours(i,j,grid);
+                int neighbours = CountNeighbours(i,j,grid, neighboursI, neighboursJ);
 
                 if (neighbours < 2 || neighbours > 3)
                 {
@@ -22,7 +22,7 @@ int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], s
             }
             if(grid[i][j].state == DEAD)
             {
-                int neighbours = CountNeighbours(i,j,grid);
+                int neighbours = CountNeighbours(i,j,grid, neighboursI, neighboursJ);
 
                 if (neighbours == 3)
                 {
@@ -46,7 +46,7 @@ int Playing(SDL_Renderer *renderer, struct Cell grid[GRID_HEIGHT][GRID_WIDTH], s
     return 0;
 }
 
-int IsValid(size_t i, size_t j)
+int IsValid(int i, int j)
 {
     int res = 0;
     if (i >= 0 && j >= 0 && i < GRID_WIDTH && j < GRID_HEIGHT)
@@ -54,40 +54,29 @@ int IsValid(size_t i, size_t j)
     return res;
 }
 
-int CountNeighbours(size_t i, size_t j, struct Cell grid[GRID_HEIGHT][GRID_WIDTH])
+int CountNeighbours(int h, int w, struct Cell grid[GRID_HEIGHT][GRID_WIDTH] ,int neighboursI[3], int neighboursJ[3])
 {
+
     int neighbours = 0;
-    if (IsValid(i-1,j-1) == 1 && grid[i-1][j-1].state == ALIVE)
+    
+    for (size_t i = 0; i < 3; i++)
     {
-        neighbours++;
+        int realI = neighboursI[i];
+        
+        for (size_t j = 0; j < 3; j++)
+        {
+            int realJ = neighboursJ[j];
+
+            if (IsValid(h + realI, w + realJ) == 1)
+            {
+                if (grid[h + realI][w + realJ].state == ALIVE)
+                {
+                    neighbours++;
+                }
+            }
+        }
+        
     }
-    if (IsValid(i-1,j) == 1 && grid[i-1][j].state == ALIVE)
-    {
-        neighbours++;
-    }
-    if (IsValid(i-1,j+1) == 1 && grid[i-1][j+1].state == ALIVE)
-    {
-        neighbours++;
-    }
-    if (IsValid(i,j-1) == 1 && grid[i][j-1].state == ALIVE)
-    {
-        neighbours++;
-    }
-    if (IsValid(i,j+1) == 1 && grid[i][j+1].state == ALIVE)
-    {
-        neighbours++;
-    }
-    if (IsValid(i+1,j-1) == 1 && grid[i+1][j-1].state == ALIVE)
-    {
-        neighbours++;
-    }
-    if (IsValid(i+1,j) == 1 && grid[i+1][j].state == ALIVE)
-    {
-        neighbours++;
-    }
-    if (IsValid(i+1,j+1) == 1 && grid[i+1][j+1].state == ALIVE)
-    {
-        neighbours++;
-    }
-    return neighbours;
+
+    return (grid[h][w].state == DEAD) ? neighbours : neighbours-1;
 }
