@@ -60,6 +60,19 @@ int main()
     while (closeRequested == 0)
     {
         SDL_Event event;
+        SDL_RenderClear(renderer);
+
+        for (size_t i = 0; i < GRID_HEIGHT; i++)
+        {
+            for (size_t j = 0; j < GRID_WIDTH; j++)
+            {
+                DrawCell(renderer, i, j, grid);
+            }
+        }
+        if (game.state == PAUSE)
+        {
+            SDL_RenderPresent(renderer);
+        }
 
         while (SDL_PollEvent(&event))
         {
@@ -67,6 +80,15 @@ int main()
             {
             case SDL_QUIT:
                 closeRequested = 1;
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if (event.button.button == SDL_BUTTON_LEFT)
+                {
+                    Sint32 i = event.button.x;
+                    Sint32 j = event.button.y;
+                    InitGame(renderer, grid, i, j);
+                    hold = 1;
+                }
                 break;
 
             case SDL_MOUSEBUTTONUP:
@@ -93,16 +115,6 @@ int main()
                     {
                         game.state = PAUSE;
                     }
-                }
-                break;
-
-            case SDL_MOUSEBUTTONDOWN:
-                if (event.button.button == SDL_BUTTON_LEFT)
-                {
-                    Sint32 i = event.button.x;
-                    Sint32 j = event.button.y;
-                    InitGame(renderer, grid, i, j);
-                    hold = 1;
                 }
                 break;
 
@@ -136,6 +148,8 @@ int main()
             }
         }
     }
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
 }

@@ -40,7 +40,7 @@ int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[GRID_H
         cell.shape->w = CELLWIDTH;
         cell.shape->x = j * CELLWIDTH; //translates grid index to window "index"
         cell.shape->y = i * CELLWIDTH; //translates grid index to window "index"
-        SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, 0x00);
         SDL_RenderFillRect(renderer, cell.shape);
     }
 
@@ -51,7 +51,7 @@ int DrawCell(SDL_Renderer *renderer, size_t i, size_t j, struct Cell grid[GRID_H
         cell.shape->x = j * CELLWIDTH; //translates grid index to window "index"
         cell.shape->y = i * CELLWIDTH; //translates grid index to window "index"
 
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
         SDL_RenderFillRect(renderer, cell.shape);
     }
 
