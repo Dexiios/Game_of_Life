@@ -1,5 +1,5 @@
-Game of Life project using SDL in C
+# Game of Life using SDL library
 
-draw cells by clicking or holding left click
+Draw cells by clicking or holding left click
 
-start/pause the game with SPACE key
+Start/pause the game with SPACE key
